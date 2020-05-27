@@ -1,34 +1,58 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
+	"io/ioutil"
 	"net/http"
+
+	"./models"
+	"./response"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprintf(w, "Welcome to work out of the day API homepage")
-	if err != nil {
-		log.Panic(err)
-	}
+	response.JSONSuccess(w, "Welcome to work out of the day API homepage")
 }
 
 func wod(w http.ResponseWriter, r *http.Request) {
+	var error models.Error
 	if r.Method == http.MethodPost {
 		newWod(w, r)
+	} else if r.Method == http.MethodGet {
+		response.JSONSuccess(w, "Do 1000 burpees")
+		return
 	} else {
-		_, err := fmt.Fprintf(w, "Invalid request method")
-		if err != nil {
-			log.Panic(err)
-		}
+		error.Message = "Invalid request method"
+		response.JSONError(w, http.StatusMethodNotAllowed, error)
+		return
 	}
 }
 
 func newWod(w http.ResponseWriter, r *http.Request) {
-	_, err := fmt.Fprintf(w, "POST request to /wod endpoint!")
+	body, err := ioutil.ReadAll(r.Body)
+	var error models.Error
 	if err != nil {
-		log.Panic(err)
+		error.Message = "cannot parse request body"
+		response.JSONError(w, http.StatusBadRequest, error)
+		return
 	}
+
+	var wod models.Wod
+
+	err = json.Unmarshal(body, &wod)
+	if err != nil {
+		error.Message = "cannot unmarshal request body."
+		response.JSONError(w, http.StatusBadRequest, error)
+		return
+	}
+
+	if wod.Title == "" || wod.Workout == "" {
+		error.Message = "title or workout cannot be empty"
+		response.JSONError(w, http.StatusBadRequest, error)
+		return
+	}
+
+	response.JSONSuccess(w, "Added wod with title: "+wod.Title)
 }
 
 func main() {
