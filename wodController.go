@@ -35,3 +35,13 @@ func StoreWodInDb(wod *models.Wod) error {
 	wod, err := wodRepo.Store(wod)
 	return err
 }
+
+// GetRamdomWodFromDb retrieves a ramdom workout for db
+func GetRamdomWodFromDb() (*models.Wod, error) {
+	wodRepo := wodrepository.WodRepository{}
+	wod, err := wodRepo.Get()
+	if err != nil {
+		return nil, err
+	}
+	return &wod, nil
+}

@@ -46,7 +46,7 @@ func newWod(w http.ResponseWriter, r *http.Request) {
 	err = StoreWodInDb(wod)
 
 	if err != nil {
-		error.Message = err.Error()
+		error.Message = "Server error"
 		response.JSONError(w, http.StatusInternalServerError, error)
 		return
 	}
@@ -54,5 +54,12 @@ func newWod(w http.ResponseWriter, r *http.Request) {
 }
 
 func randomWod(w http.ResponseWriter, r *http.Request) {
-
+	var error models.Error
+	wod, err := GetRamdomWodFromDb()
+	if err != nil {
+		error.Message = err.Error()
+		response.JSONError(w, http.StatusInternalServerError, error)
+		return
+	}
+	response.JSONSuccess(w, wod)
 }

@@ -2,10 +2,7 @@ package driver
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-	"os"
-
 	"github.com/lib/pq"
 	"github.com/subosito/gotenv"
 )
@@ -23,7 +20,6 @@ func logFatal(err error) {
 
 // ConnectDB establish a db connection
 func ConnectDB() *sql.DB {
-	fmt.Println(os.Getenv("ELEPHANTSQL_URL"))
 	pgURL, err := pq.ParseURL("postgres://rtdwokqq:OovGoBm0nzfyOXB7Ul4JUe44eGryE6el@kandula.db.elephantsql.com:5432/rtdwokqq")
 	logFatal(err)
 
