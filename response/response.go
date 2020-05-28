@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"../models"
+	"wod-api/models"
 )
 
 // JSONError is a generic json error response
