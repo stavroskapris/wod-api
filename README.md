@@ -29,7 +29,7 @@ POST /work-out-of-the-day
 
     Response body:
     {
-        Added wod with title: Fran
+        "Added wod with title: Lynne"
     }
 
 ### Error Response
