@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"wod-api/controller"
+	wodController "wod-api/controller"
 	"wod-api/models"
 	"wod-api/response"
 )
@@ -37,14 +37,14 @@ func wod(w http.ResponseWriter, r *http.Request) {
 
 func newWod(w http.ResponseWriter, r *http.Request) {
 	var error models.Error
-	wod, err := controller.NewWodFromRequest(r)
+	wod, err := wodController.NewWodFromRequest(r)
 
 	if err != nil {
 		error.Message = err.Error()
 		response.JSONError(w, http.StatusUnprocessableEntity, error)
 		return
 	}
-	err = controller.StoreWodInDb(wod)
+	err = wodController.StoreWodInDb(wod)
 
 	if err != nil {
 		error.Message = "Server"
@@ -56,7 +56,7 @@ func newWod(w http.ResponseWriter, r *http.Request) {
 
 func randomWod(w http.ResponseWriter, r *http.Request) {
 	var error models.Error
-	wod, err := controller.GetRamdomWodFromDb()
+	wod, err := wodController.GetRamdomWodFromDb()
 	if err != nil {
 		error.Message = err.Error()
 		response.JSONError(w, http.StatusInternalServerError, error)
