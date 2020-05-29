@@ -47,7 +47,7 @@ func newWod(w http.ResponseWriter, r *http.Request) {
 	err = wodController.StoreWodInDb(wod)
 
 	if err != nil {
-		error.Message = "Server"
+		error.Message = "Server error"
 		response.JSONError(w, http.StatusInternalServerError, error)
 		return
 	}
