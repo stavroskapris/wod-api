@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+ # App Service
+ app:
+    container_name: wod-api
+    # Configuration for building the docker image for the service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    volumes:
+        - .:/app
+    command: go run main.go    
