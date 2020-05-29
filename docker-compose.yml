@@ -6,11 +6,10 @@ services:
     container_name: wod-api
     # Configuration for building the docker image for the service
     build:
-      context: . # Use an image built from the specified dockerfile in the current directory.
+      context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:8081" # Forward the exposed port 8080 on the container to port 8080 on the host machine
-    # restart: unless-stopped
+      - "8081:8081"
     volumes:
         - .:/app
     command: go run main.go    
