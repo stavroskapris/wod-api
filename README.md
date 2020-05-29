@@ -17,7 +17,8 @@ GET  /work-out-of-the-day
 
     Response body:
     {
-        workout
+        "title":"Fran",
+        "workout":"21–15–9 Reps Thruster 95lbs Pull Ups"
     }
 
 ```bash 
@@ -28,7 +29,7 @@ POST /work-out-of-the-day
 
     Response body:
     {
-        Added wod with title: 
+        Added wod with title: Fran
     }
 
 ### Error Response
